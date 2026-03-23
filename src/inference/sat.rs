@@ -2,8 +2,8 @@ use crate::config::{SaTConfig, WeightingScheme};
 use crate::model::{ModelLoadError, load_ort_model, load_tokenizer};
 use half::f16;
 use ort::session::Session;
-use ort::tensor::Shape;
-use ort::value::TensorRef;
+
+use ort::value::{Shape, TensorRef};
 use std::sync::{Arc, Mutex};
 use thiserror::Error;
 use tokenizers::{Encoding, Tokenizer};

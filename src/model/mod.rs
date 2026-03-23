@@ -1,5 +1,5 @@
 use crate::config::{SaTConfig, SaTConfigError};
-use ort::execution_providers::cpu::CPUExecutionProvider;
+use ort::execution_providers::cpu::CPU;
 use ort::session::Session;
 use tokenizers::Tokenizer;
 const TOKENIZER_ID: &str = "facebookAI/xlm-roberta-base";
@@ -13,6 +13,9 @@ pub enum ModelLoadError {
     #[error("Failed to load ort session: {0}")]
     OrtError(#[from] ort::Error),
 
+    #[error("Failed to load model from file: {0}")]
+    SessionError(#[from] ort::Error<ort::session::builder::SessionBuilder>),
+
     #[error("Configuration error: {0}")]
     ConfigError(#[from] SaTConfigError),
 }
@@ -22,8 +25,8 @@ pub fn load_tokenizer() -> Result<Tokenizer, ModelLoadError> {
 }
 
 pub fn load_ort_model(config: &SaTConfig) -> Result<Session, ModelLoadError> {
-    let builder = Session::builder()?
-        .with_execution_providers([CPUExecutionProvider::default().build()])?
+    let mut builder = Session::builder()?
+        .with_execution_providers([CPU::default().build()])?
         .with_optimization_level(match config.optimization_level {
             0 => ort::session::builder::GraphOptimizationLevel::Disable,
             1 => ort::session::builder::GraphOptimizationLevel::Level1,

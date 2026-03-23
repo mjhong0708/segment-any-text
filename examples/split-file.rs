@@ -56,5 +56,5 @@ pub fn load_model(model_name: &str) -> Result<SaT> {
         .strip_whitespace(true)
         .build()?;
 
-    SaT::new(config).map_err(|e| e.into())
+    Ok(SaT::new(config).unwrap())
 }

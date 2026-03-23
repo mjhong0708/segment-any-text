@@ -8,8 +8,8 @@ anyhow = "1.0.100"
 clap = { version = "4.5.53", features = ["derive"] }
 half = "2.7.1"
 hf-hub = "0.4.3"
-ndarray = "0.16.1"
-ort = { version = "=2.0.0-rc.10", features = ["half", "ndarray"] }
+ndarray = "0.17.2"
+ort = { version = "=2.0.0-rc.12", features = ["half", "ndarray"] }
 thiserror = "2.0.17"
 tokenizers = { version = "0.22.1", features = ["http"] }
 
