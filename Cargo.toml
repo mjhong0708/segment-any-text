@@ -1,6 +1,6 @@
 [package]
 name = "segment-any-text"
-version = "0.3.2"
+version = "0.3.3"
 edition = "2024"
 
 [dependencies]
@@ -9,7 +9,12 @@ clap = { version = "4.5.53", features = ["derive"] }
 half = "2.7.1"
 hf-hub = "0.4.3"
 ndarray = "0.17.2"
-ort = { version = "=2.0.0-rc.12", features = ["half", "ndarray"] }
+ort = { version = "=2.0.0-rc.12", default-features = false, features = ["std", "ndarray", "half", "tracing", "tls-native", "api-24"] }
 thiserror = "2.0.17"
 tokenizers = { version = "0.22.1", features = ["http"] }
 
+[features]
+default = [ "ort-bin" ]
+
+ort-bin = [ "ort/download-binaries", "ort/copy-dylibs" ]
+ort-static = [ ]
